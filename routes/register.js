@@ -16,11 +16,21 @@ router.post('/', function(req, res, next) {
         password: req.body.passwordRegister,
         confirmPassword: req.body.confirmPasswordRegister
     };
+
+    var user = {
+        username: req.body.usernameRegister,
+        email: req.body.emailRegister,
+        password: req.body.passwordRegister,
+    };
+
     //register users
     if (item.password === item.confirmPassword) {
         //create user and login
         firebase.auth().createUserWithEmailAndPassword(item.email, item.password).then(function() {
-            res.render('image', { title: 'CC: Upload Image' })
+            let addUser = firebase.firestore().collection('users').add(user);
+            return addUser.then(function() {
+                res.render('image', { title: 'CC: Upload Image' })
+            });
         });
     } else {
         // if password and confirm dont match

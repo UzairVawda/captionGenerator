@@ -7,24 +7,27 @@
                     {{#if error}}
                     <p>{{error}}</p>
                     {{/if}}
-                    <form class="form-signin" id="form-signin" action="/register" method="post">
+                    {{#if message}}
+                    <p>{{message}}</p>
+                    {{/if}}
+                    <form class="form-signin" id="form-signin" action="/caption" method="post">
                         <div class="form-label-group">
                             <textarea type="caption" name="caption" class="form-control" required autofocus></textarea>
                             <label for="caption">Add Caption</label>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="hashtag" name="hashtag" class="form-control" placeholder="Add hashtag" required>
+                            <input type="hashtag" name="hashtagOne" class="form-control" placeholder="Add hashtag" required>
                             <label for="hashtag">Add Hashtag</label>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="hashtag" name="hashtag" class="form-control" placeholder="Add hashtag">
+                            <input type="hashtag" name="hashtagTwo" class="form-control" placeholder="Add hashtag">
                             <label for="hashtag">Add Hashtag</label>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="hashtag" name="hashtag" class="form-control" placeholder="Add hashtag">
+                            <input type="hashtag" name="hashtagThree" class="form-control" placeholder="Add hashtag">
                             <label for="hashtag">Add Hashtag</label>
                         </div>
                         
