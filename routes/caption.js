@@ -6,8 +6,10 @@ var firebase = require("firebase/app");
 router.get('/', function(req, res, next) {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+            console.log("was logged in, now to upload page");
             res.render('caption', { title: 'CC: Home' });
         } else {
+            console.log("was never logged in, login ");
             res.render('signin', { title: 'CC: Sign In', error: "Please sign in first!" });
         }
     });
@@ -21,7 +23,7 @@ router.post('/', function(req, res, next) {
         hashtagThree: req.body.hashtagThree,
         username: firebase.auth().currentUser.email
     };
-    console.log(caption);
+    // console.log(caption);
     let addCaption = firebase.firestore().collection('captions').add(caption);
     return addCaption.then(function() {
         res.render('caption', { title: 'CC: Caption', message: 'Success' });

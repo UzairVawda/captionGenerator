@@ -4,7 +4,15 @@ var firebase = require("firebase/app");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('signin', { title: 'CC: Sign In' });
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log("already signedin with email", firebase.auth().currentUser.email + ' .')
+            res.render('image', { title: 'CC: Upload Image', message: 'You are already signed in as ' + firebase.auth().currentUser.email + ' .' });
+        } else {
+            console.log("not signed in ")
+            res.render('signin', { title: 'CC: Sign In' });
+        }
+    });
 });
 
 router.post('/', function(req, res, next) {

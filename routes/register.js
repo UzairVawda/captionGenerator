@@ -4,7 +4,16 @@ var firebase = require("firebase/app");
 
 // GET home page.
 router.get('/', function(req, res, next) {
-    res.render('register', { title: 'CC: Register' });
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log("was logged in, back to upload");
+            res.render('image', { title: 'CC: Upload Image', message: 'You are already signed in!' });
+        } else {
+            console.log("was never logged in, register");
+            res.render('register', { title: 'CC: Register' });
+        }
+    });
 });
 
 // post information to db

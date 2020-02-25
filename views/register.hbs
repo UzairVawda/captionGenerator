@@ -5,7 +5,10 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">Register Here</h5>
                     {{#if error}}
-                    <p>{{error}}</p>
+                    <p id="error">{{error}}</p>
+                    {{/if}}
+                    {{#if message}}
+                    <p id="message">{{message}}</p>
                     {{/if}}
                     <form class="form-signin" id="form-signin" action="/register" method="post">
                         <div class="form-label-group">
