@@ -3,35 +3,35 @@
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Register Here</h5>
+                    <h5 class="card-title text-center">Add Caption</h5>
                     {{#if error}}
                     <p>{{error}}</p>
                     {{/if}}
                     <form class="form-signin" id="form-signin" action="/register" method="post">
                         <div class="form-label-group">
-                            <input type="username" name="usernameRegister" class="form-control" placeholder="Username" required autofocus>
-                            <label for="usernameRegister">Quote</label>
+                            <textarea type="caption" name="caption" class="form-control" required autofocus></textarea>
+                            <label for="caption">Add Caption</label>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="email" name="emailRegister" class="form-control" placeholder="Email address" required>
-                            <label for="emailRegister">Email address</label>
+                            <input type="hashtag" name="hashtag" class="form-control" placeholder="Add hashtag" required>
+                            <label for="hashtag">Add Hashtag</label>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="password" name="passwordRegister" class="form-control" placeholder="Password" required>
-                            <label for="passwordRegister">Password</label>
+                            <input type="hashtag" name="hashtag" class="form-control" placeholder="Add hashtag">
+                            <label for="hashtag">Add Hashtag</label>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="password" name="confirmPasswordRegister" class="form-control" placeholder="Confirm Password" required>
-                            <label for="confirmPasswordRegister">Confirm Password</label>
+                            <input type="hashtag" name="hashtag" class="form-control" placeholder="Add hashtag">
+                            <label for="hashtag">Add Hashtag</label>
                         </div>
+                        
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Add Caption</button>
                         
                         <hr class="my-4">
-                        
-                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register Here</button>
-                        
+
                     </form>
                 </div>
             </div>
