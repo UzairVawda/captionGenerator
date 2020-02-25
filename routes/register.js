@@ -20,8 +20,7 @@ router.post('/', function(req, res, next) {
     if (item.password === item.confirmPassword) {
         //create user and login
         firebase.auth().createUserWithEmailAndPassword(item.email, item.password).then(function() {
-            console.log("cred", cred.user);
-            res.render('index', { title: "CC: Upload Image", message: "logged in" })
+            res.render('image', { title: 'CC: Upload Image' })
         });
     } else {
         // if password and confirm dont match

@@ -6,8 +6,8 @@ var firebase = require("firebase/app");
 router.get('/', function(req, res, next) {
     console.log("SHOULD LOG OUT")
     firebase.auth().signOut().then(function() {
-        res.render('index', { title: 'CC: Logging Out', message: 'You are now logged out!' });
-    }).catch(function(error) {
+        res.render('signin', { title: 'CC: Logging Out' });
+    }).catch(function() {
         res.render('index', { title: 'CC: Logging Out', message: 'You were never logged in!' });
     });
 });
