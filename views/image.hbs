@@ -1,0 +1,30 @@
+<div class="container" >
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Upload an</h5>
+                    {{#if error}}
+                    <p>{{error}}</p>
+                    {{/if}}
+                    <form class="form-signin" id="form-signin" action="/image" method="post">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+                        
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Get Caption</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
