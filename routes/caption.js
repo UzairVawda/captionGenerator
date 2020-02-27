@@ -4,15 +4,18 @@ var firebase = require("firebase/app");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            console.log("was logged in, now to upload page");
-            res.render('caption', { title: 'CC: Home' });
-        } else {
-            console.log("was never logged in, login ");
-            res.render('signin', { title: 'CC: Sign In', error: "Please sign in first!" });
-        }
-    });
+    const user = firebase.auth().currentUser;
+    // res.setHeader('content-type', 'text/html');
+    if (user) {
+        console.log("Caption.js render method, user is logged in");
+        res.render('caption', {
+            title: 'CC: Home',
+            loginFlag: true
+        });
+    } else {
+        console.log("Caption.js render method, user is NOT logged in");
+        res.redirect('signin');
+    };
 });
 
 router.post('/', function(req, res, next) {
@@ -25,9 +28,14 @@ router.post('/', function(req, res, next) {
     };
     // console.log(caption);
     let addCaption = firebase.firestore().collection('captions').add(caption);
+    // res.setHeader('content-type', 'text/html');
+    console.log("Caption.js submit method, Adding Caption");
     return addCaption.then(function() {
-        res.render('caption', { title: 'CC: Caption', message: 'Success' });
+        res.render('caption', {
+            title: 'CC: Caption',
+            message: 'Successfull added your caption!',
+            loginFlag: true
+        });
     });
 });
-
 module.exports = router;

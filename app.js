@@ -29,8 +29,8 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // Adding the Firebase products 
-var auth = require("firebase/auth");
-var firestore = require("firebase/firestore");
+const auth = require("firebase/auth");
+const firestore = require("firebase/firestore");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views/'));

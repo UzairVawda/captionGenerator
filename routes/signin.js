@@ -4,15 +4,18 @@ var firebase = require("firebase/app");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            console.log("already signedin with email", firebase.auth().currentUser.email + ' .')
-            res.render('image', { title: 'CC: Upload Image', message: 'You are already signed in as ' + firebase.auth().currentUser.email + ' .' });
-        } else {
-            console.log("not signed in ")
-            res.render('signin', { title: 'CC: Sign In' });
-        }
-    });
+    const user = firebase.auth().currentUser;
+    // res.setHeader('content-type', 'text/html');
+    if (user) {
+        console.log("Signin.js render method, user is logged in");
+        res.redirect('image');
+    } else {
+        console.log("Signin.js render method, user is NOT logged in");
+        res.render('signin', {
+            title: 'CC: Sign In',
+            loginFlag: false
+        });
+    };
 });
 
 router.post('/', function(req, res, next) {
@@ -22,12 +25,18 @@ router.post('/', function(req, res, next) {
     };
     //signin users
     firebase.auth().signInWithEmailAndPassword(item.email, item.password).then(function() {
-        res.render('image', { title: 'CC: Upload Image' })
+        console.log("Sigin.js submit method, login successful");
+        res.redirect('image');
     }).catch(function(error) {
         var errorMessage = error.message;
-        res.render('signIn', { title: 'CC: Failed Sign In', error: errorMessage })
+        // res.setHeader('content-type', 'text/html');
+        console.log("Sigin.js submit method, Failed to login");
+        res.render('signIn', {
+            title: 'CC: Failed Sign In',
+            error: errorMessage,
+            loginFlag: false
+        });
     });
-
 });
 
 module.exports = router;
