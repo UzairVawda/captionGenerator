@@ -6,7 +6,6 @@ var logger = require('morgan');
 var firebase = require("firebase/app");
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register');
 var signinRouter = require('./routes/signin');
 var logoutRouter = require('./routes/logout');
@@ -15,6 +14,7 @@ var captionRouter = require('./routes/caption');
 
 var app = express();
 
+//firebase config
 var firebaseConfig = {
     apiKey: "AIzaSyBATCUhsyH5fh6ZyO40o5uMSQ1C4pnQ3JI",
     authDomain: "captiongenerator-268515.firebaseapp.com",
@@ -28,9 +28,9 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Add the Firebase products that you want to use
-var auth = require("firebase/auth");
-var firestore = require("firebase/firestore");
+// Adding the Firebase products 
+const auth = require("firebase/auth");
+const firestore = require("firebase/firestore");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views/'));
@@ -43,7 +43,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/signin', signinRouter);
 app.use('/logout', logoutRouter);

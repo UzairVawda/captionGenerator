@@ -4,7 +4,18 @@ var firebase = require("firebase/app");
 
 // GET home page.
 router.get('/', function(req, res, next) {
-    res.render('register', { title: 'CC: Register' });
+    const user = firebase.auth().currentUser;
+    // // res.setHeader('content-type', 'text/html');
+    if (user) {
+        console.log("Register.js render method, user is logged in");
+        res.redirect('image');
+    } else {
+        console.log("Resgister.js render method, user is NOT logged in");
+        res.render('register', {
+            title: 'CC: Register',
+            loginFlag: false
+        });
+    };
 });
 
 // post information to db
@@ -29,12 +40,20 @@ router.post('/', function(req, res, next) {
         firebase.auth().createUserWithEmailAndPassword(item.email, item.password).then(function() {
             let addUser = firebase.firestore().collection('users').add(user);
             return addUser.then(function() {
-                res.render('image', { title: 'CC: Upload Image' })
+                // res.setHeader('content-type', 'text/html');
+                console.log("register.js submit method, Registering a users");
+                res.redirect('image');
             });
         });
     } else {
         // if password and confirm dont match
-        res.render('register', { title: "CC: Register Failed", error: "Password and Confirm password do not match!" })
+        // res.setHeader('content-type', 'text/html');
+        console.log("register.js submit method, FAILED to register a users");
+        res.render('register', {
+            title: "CC: Register Failed",
+            error: "Password and Confirm password do not match!",
+            loginFlag: false
+        })
     }
 });
 
