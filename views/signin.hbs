@@ -7,9 +7,10 @@
                     {{#if error}}
                     <p id="error">{{error}}</p>
                     {{/if}}
-                    {{#if message}}
-                    <p id="message">{{message}}</p>
-                    {{/if}}
+                    {{!-- {{#if Session["message"]}}
+                    <p>HERE</p>
+                    <p id="message">{{req.session.message}}</p>
+                    {{/if}} --}}
                     <form class="form-signin" id="form-signin" action="/signin" method="post">
                         <div class="form-label-group">
                             <div class="form-label-group">

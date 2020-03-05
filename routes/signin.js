@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var firebase = require("firebase/app");
+const express = require('express');
+const router = express.Router();
+const firebase = require("firebase/app");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    var item = {
+    const item = {
         email: req.body.emailSignin,
         password: req.body.passwordSiginin,
     };

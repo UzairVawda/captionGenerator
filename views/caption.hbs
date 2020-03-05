@@ -7,9 +7,9 @@
                     {{#if error}}
                     <p id="error">{{error}}</p>
                     {{/if}}
-                    {{#if message}}
-                    <p id="message">{{message}}</p>
-                    {{/if}}
+                    <div class="alert alert-danger" role="alert">
+                        <p id="messageDiv"></p>
+                    </div>
                     <form class="form-signin" id="form-signin" action="/caption" method="post">
                         <div class="form-label-group">
                             <textarea type="caption" name="caption" class="form-control" required autofocus></textarea>

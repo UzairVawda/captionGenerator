@@ -1,36 +1,54 @@
-var express = require('express');
-var router = express.Router();
-var firebase = require('firebase/app');
+const express = require('express');
+const router = express.Router();
+const firebase = require('firebase/app');
 const vision = require('@google-cloud/vision');
-const client = new vision.ImageAnnotatorClient({
-    keyFilename: 'CaptionGenerator.json'
-});
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
     const user = firebase.auth().currentUser;
-    // res.setHeader('content-type', 'text/html');
     if (user) {
-        console.log("Image.js render method, user is logged in");
         res.render('image', {
             title: 'CC: Upload Image',
             loginFlag: true
         });
     } else {
-        console.log("Image.js render method, user is NOT logged in");
         res.redirect('signin')
     }
 });
 
 router.post('/', async function(req, res, next) {
-    const imageLables = [];
-    const image = req.body.userImage
-    const [result] = await client.labelDetection(image);
-    const labels = result.labelAnnotations;
-    labels.forEach(label => imageLables.push(label.description));
-    res.render('image', {
+    //setup lables array and get arrary
+    const imageHashtags = [];
+    const userCaptions = [];
+    const userImage = req.body.userImage;
+
+    //vision lable detection
+    const [result] = await client.labelDetection(userImage);
+    const hashtag = result.labelAnnotations;
+    hashtag.forEach(label => imageHashtags.push(label.description));
+
+    //get all captions then compare 
+    await captionRef.get().then(snapshot => {
+            snapshot.forEach(doc => {
+                for (var i = 0; i < imageHashtags.length; i++) {
+                    if (imageHashtags[i] == doc.data().hashtagOne) {
+                        userCaptions.push(doc.data().caption)
+                    } else if (imageHashtags[i] == doc.data().hashtagTwo) {
+                        userCaptions.push(doc.data().caption)
+                    } else if (imageHashtags[i] == doc.data().hashtagThree) {
+                        userCaptions.push(doc.data().caption)
+                    }
+                }
+            });
+        })
+        .catch(err => {
+            userCaptions.push('Error getting documents', err);
+        });
+
+    res.render('imageCaption', {
         title: 'CC: Upload Image',
-        labels: imageLables,
+        hashtags: imageHashtags,
+        captions: userCaptions,
+        image: userImage,
         loginFlag: true
     });
 });

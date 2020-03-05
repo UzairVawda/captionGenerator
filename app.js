@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var firebase = require("firebase/app");
+var session = require('express-session')
 
 var indexRouter = require('./routes/index');
 var registerRouter = require('./routes/register');
@@ -11,19 +12,20 @@ var signinRouter = require('./routes/signin');
 var logoutRouter = require('./routes/logout');
 var imageRouter = require('./routes/image');
 var captionRouter = require('./routes/caption');
+var firebaseConfig = require('./FirebaseConfig.json');
 
 var app = express();
 
 //firebase config
 var firebaseConfig = {
-    apiKey: "AIzaSyBATCUhsyH5fh6ZyO40o5uMSQ1C4pnQ3JI",
-    authDomain: "captiongenerator-268515.firebaseapp.com",
-    databaseURL: "https://captiongenerator-268515.firebaseio.com",
-    projectId: "captiongenerator-268515",
-    storageBucket: "captiongenerator-268515.appspot.com",
-    messagingSenderId: "1044671701815",
-    appId: "1:1044671701815:web:bf20df43e586e59016f0b2",
-    measurementId: "G-VTC2SDSRB5"
+    apiKey: firebaseConfig.apiKey,
+    authDomain: firebaseConfig.authDomain,
+    databaseURL: firebaseConfig.databaseURL,
+    projectId: firebaseConfig.projectId,
+    storageBucket: firebaseConfig.storageBucket,
+    messagingSenderId: firebaseConfig.messagingSenderId,
+    appId: firebaseConfig.appId,
+    measurementId: firebaseConfig.measurementId
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -31,6 +33,7 @@ firebase.initializeApp(firebaseConfig);
 // Adding the Firebase products 
 const auth = require("firebase/auth");
 const firestore = require("firebase/firestore");
+const storage = require("firebase/storage");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views/'));
@@ -41,6 +44,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//using sessions to manage error
+app.use(session({ secret: 'max', saveUninitialized: 'false', resave: 'false' }));
 
 app.use('/', indexRouter);
 app.use('/register', registerRouter);
