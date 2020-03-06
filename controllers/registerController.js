@@ -2,7 +2,6 @@ const firebase = require("firebase/app");
 
 function render(req, res, next) {
     const user = firebase.auth().currentUser;
-    // // res.setHeader('content-type', 'text/html');
     if (user) {
         res.redirect('image');
     } else {

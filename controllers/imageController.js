@@ -1,3 +1,4 @@
+const functions = require('../public/javascript/functions');
 const firebase = require('firebase/app');
 const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient({
@@ -18,6 +19,7 @@ function render(req, res, next) {
 
 async function checkImage(req, res, next) {
     //setup lables array and get arrary
+    var unique = [];
     const imageHashtags = [];
     const userCaptions = [];
     const userImage = req.body.userImage;
@@ -46,13 +48,26 @@ async function checkImage(req, res, next) {
             userCaptions.push('Error getting documents', err);
         });
 
-    res.render('imageCaption', {
-        title: 'CC: Upload Image',
-        hashtags: imageHashtags,
-        captions: userCaptions,
-        image: userImage,
-        loginFlag: true
-    });
+    if (userCaptions.length == 0) {
+        userCaptions.push('Failed to find a caption for this image! Try uploading a caption!');
+        res.render('imageCaption', {
+            title: 'CC: Upload Image',
+            hashtags: imageHashtags,
+            captions: userCaptions,
+            image: userImage,
+            loginFlag: true
+        });
+
+    } else {
+        unique = functions.cleanArray(userCaptions)
+        res.render('imageCaption', {
+            title: 'CC: Upload Image',
+            hashtags: imageHashtags,
+            captions: unique,
+            image: userImage,
+            loginFlag: true
+        });
+    }
 }
 
 
