@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const firebase = require('firebase/app');
 const vision = require('@google-cloud/vision');
+const client = new vision.ImageAnnotatorClient({
+    keyFilename: 'CaptionGenerator.json'
+});
 
 router.get('/', function(req, res, next) {
     const user = firebase.auth().currentUser;
@@ -20,6 +23,7 @@ router.post('/', async function(req, res, next) {
     const imageHashtags = [];
     const userCaptions = [];
     const userImage = req.body.userImage;
+    const captionRef = firebase.firestore().collection('captions');
 
     //vision lable detection
     const [result] = await client.labelDetection(userImage);

@@ -4,8 +4,10 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                 
-                    <p>Search Hash</p>
-
+                    <p>Searching for {{search}}</p>
+                    {{#each captions as |caption|}}
+                        <p>{{caption}}</p>
+                    {{/each}}
                 </div>
             </div>
         </div>

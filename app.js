@@ -11,9 +11,10 @@ var registerRouter = require('./routes/register');
 var signinRouter = require('./routes/signin');
 var logoutRouter = require('./routes/logout');
 var imageRouter = require('./routes/image');
+var searchHashRouter = require('./routes/searchHash');
 var captionRouter = require('./routes/caption');
-var firebaseConfig = require('./FirebaseConfig.json');
 
+var firebaseConfig = require('./FirebaseConfig.json');
 var app = express();
 
 //firebase config
@@ -54,6 +55,7 @@ app.use('/signin', signinRouter);
 app.use('/logout', logoutRouter);
 app.use('/image', imageRouter);
 app.use('/caption', captionRouter);
+app.use('/searchHash', searchHashRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

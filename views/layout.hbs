@@ -24,14 +24,14 @@
 				</li>
 			</ul>
 			<ul class="navbar-nav navbar-right">
-				<form class="form-inline my-2 my-lg-0" action="/searchHash" method="get">
+				<form class="form-inline my-2 my-lg-0" action="/searchHash" method="post">
 					<div class="input-group flex-nowrap">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="addon-wrapping">#</span>
 						</div>
-						<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+						<input type="text" class="form-control" placeholder="Hashtag" aria-label="Hashtag" aria-describedby="addon-wrapping" name="search">
 					</div>
-					<button class="btn btn-primary">Search</button>
+					<button class="btn btn-primary">Search Hashtag</button>
 				</form>
 				{{#if loginFlag}}
 				<li class="nav-item active">
