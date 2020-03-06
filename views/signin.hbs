@@ -5,11 +5,10 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">Sign In</h5>
                     {{#if error}}
-                    <p id="error">{{error}}</p>
+                        <p id="error">{{error}}</p>
                     {{/if}}
                     {{!-- {{#if Session["message"]}}
-                    <p>HERE</p>
-                    <p id="message">{{req.session.message}}</p>
+                        <p id="message">{{req.session.message}}</p>
                     {{/if}} --}}
                     <form class="form-signin" id="form-signin" action="/signin" method="post">
                         <div class="form-label-group">

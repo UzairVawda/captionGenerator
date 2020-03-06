@@ -1,11 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const firebase = require("firebase/app");
+const logout = require('../controllers/logoutController');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    firebase.auth().signOut().then(function() {
-        res.redirect('/');
-    });
-});
+router.get('/', logout.logout);
 module.exports = router;
