@@ -1,4 +1,5 @@
 const firebase = require("firebase/app");
+const session = require("express-session");
 
 function render(req, res, next) {
     const user = firebase.auth().currentUser;
@@ -19,27 +20,64 @@ function createUser(req, res, next) {
     const password = req.body.passwordRegister
     const confirmPassword = req.body.confirmPasswordRegister
 
-    //register users
-    if (password === confirmPassword) {
-        //create user and login
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
-            const addUser = firebase.firestore().collection('users').add({
-                username: username,
-                email: email,
-                password: password
-            });
-            return addUser.then(function() {
-                res.redirect('image');
-            });
+
+    //create user and login
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
+        const addUser = firebase.firestore().collection('users').add({
+            username: username,
+            email: email,
+            password: password
         });
-    } else {
-        // if password and confirm dont match
-        res.render('register', {
-            title: "CC: Register Failed",
-            error: "Password and Confirm password do not match!",
-            loginFlag: false
-        })
-    }
+        return addUser.then(function() {
+            res.redirect('image');
+        });
+    }).catch(error => {
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                console.log('Email address ' + email + ' already in use.');
+                res.render('register', {
+                    title: 'CC: Register Failed',
+                    error: 'Email address ' + email + ' already in use.',
+                    loginFlag: false
+                });
+            case 'auth/invalid-email':
+                console.log('Email address ' + email + ' is invalid.');
+                res.render('register', {
+                    title: 'CC: Register Failed ',
+                    error: 'Email address ' + email + ' is invalid.',
+                    loginFlag: false
+                });
+            case 'auth/operation-not-allowed':
+                console.log('Error during sign up.');
+                res.render('register', {
+                    title: 'CC: Register Failed',
+                    error: 'Error during sign up.',
+                    loginFlag: false
+                });
+            case 'auth/weak-password':
+                console.log('Password is not strong enough. Add additional characters including special characters and numbers.');
+                res.render('register', {
+                    title: 'CC: Register Failed',
+                    error: 'Password is not strong enough. Add additional characters including special characters and numbers.',
+                    loginFlag: false
+                });
+            case password != confirmPassword:
+                console.log('Password does not match confirm password! Please try again!');
+                res.render('register', {
+                    title: 'CC: Register Failed',
+                    error: 'Password does not match confirm password! Please try again!',
+                    loginFlag: false
+                });
+            default:
+                console.log(error.message);
+                res.render('register', {
+                    title: 'CC: Register Failed',
+                    error: error.message,
+                    loginFlag: false
+                });
+        }
+    })
 }
+
 
 module.exports = { createUser: createUser, render: render }

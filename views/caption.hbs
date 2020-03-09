@@ -3,38 +3,49 @@
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Add Caption</h5>
+                    <h2 class="card-title text-center">Add Caption</h2>
                     {{#if error}}
-                    <p id="error">{{error}}</p>
+                        <p id="error">{{error}}</p>
                     {{/if}}
                     <div class="alert alert-danger" role="alert">
                         <p id="messageDiv"></p>
                     </div>
-                    <form class="form-signin" id="form-signin" action="/caption" method="post">
-                        <div class="form-label-group">
-                            <textarea type="caption" name="caption" class="form-control" required cdkFocusInitial></textarea>
-                            <label for="caption">Add Caption</label>
+                    <form action="/caption" method="post">
+                        <div class="form-group">
+                            <textarea type="caption" name="caption" class="form-control" placeholder="Add Caption" required autofocus></textarea>
                         </div>
 
-                        <div class="form-label-group">
-                            <input type="hashtag" name="hashtagOne" class="form-control" placeholder="Add hashtag" required>
-                            <label for="hashtag">Add Hashtag</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend3">#</span>
+                                </div>
+                                <input type="text" name="hashtagOne" class="form-control" placeholder="Add hashtag" required>
+                                <div class="invalid-feedback">
+                                    Required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend3">#</span>
+                                </div>
+                                <input type="text" name="hashtagTwo" class="form-control" placeholder="Add hashtag">
+                            </div>
                         </div>
 
-                        <div class="form-label-group">
-                            <input type="hashtag" name="hashtagTwo" class="form-control" placeholder="Add hashtag">
-                            <label for="hashtag">Add Hashtag</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend3">#</span>
+                                </div>
+                                <input type="text" name="hashtagThree" class="form-control" placeholder="Add hashtag">
+                            </div>
                         </div>
-
-                        <div class="form-label-group">
-                            <input type="hashtag" name="hashtagThree" class="form-control" placeholder="Add hashtag">
-                            <label for="hashtag">Add Hashtag</label>
-                        </div>
-                        
+                        <hr class="my-4">        
                         <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Add Caption</button>
-                        
-                        <hr class="my-4">
-
+                
                     </form>
                 </div>
             </div>

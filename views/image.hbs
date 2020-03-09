@@ -7,10 +7,8 @@
                     {{#if error}}
                         <p id="error">{{error}}</p>
                     {{/if}}
-                    {{!-- {{#if message}}
-                        <p id="message">{{message}}</p>
-                    {{/if}} --}}
                     <form class="form-signin" id="form-signin" action="/image" method="post">
+
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
@@ -21,6 +19,12 @@
                                 <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                             </div>
                         </div>
+                        <script>
+                            $(".custom-file-input").on("change", function() {
+                                var fileName = $(this).val().split("\\").pop();
+                                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                            });
+                        </script>
 
                         <hr class="my-4">
                         

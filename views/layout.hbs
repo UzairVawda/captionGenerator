@@ -3,12 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>{{ title }}</title>
+	<link rel = "icon" href="/images/logo.png" type="image/x-icon">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+			crossorigin="anonymous">
 	<link rel="stylesheet" href="/stylesheets/style.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light">
-		<a class="navbar-brand nav-link" href="/">CC</a>
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+		<a class="navbar-brand nav-link" href="#">
+			<img src="/images/logo.png" width="50" height="40" alt="">
+		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
 				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -29,30 +34,33 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="addon-wrapping">#</span>
 						</div>
-						<input type="text" class="form-control" placeholder="Hashtag" aria-label="Hashtag" aria-describedby="addon-wrapping" name="search">
+						<input type="text" class="form-control" placeholder="Hashtag" aria-label="Hashtag" aria-describedby="addon-wrapping" name="search" required>
 					</div>
 					<button class="btn btn-primary">Search Hashtag</button>
 				</form>
-				{{#if loginFlag}}
-				<li class="nav-item active">
-					<a class="nav-link" href="/logout">Logout</a>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+          				aria-haspopup="true" aria-expanded="false">
+          				<i class="fa fa-user"></i>  
+					</a>
+					<div class="dropdown-menu dropdown-menu-right dropdown-default"
+							aria-labelledby="navbarDropdownMenuLink-333">
+						{{#if loginFlag}}
+							<a class="dropdown-item" href="/logout">Logout</a>
+						{{else}}
+							<a class="dropdown-item" href="/signin">Sign In</a>
+							<a class="dropdown-item" href="/register">Register</a>
+						{{/if}}
+					</div>
 				</li>
-				{{else}}
-				<li class="nav-item active ">
-					<a class="nav-link" href="/signin">Sign In</a>
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="/register">Register</a>
-				</li>
-				{{/if}}
 			</ul>
 		</div>
 	</nav>
 	
-	{{{ body }}}
-
 	<script src="/javascript/jquery.js"></script>
+	{{{ body }}}
+	<script src="https://kit.fontawesome.com/980c80b05d.js" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
 </html>
