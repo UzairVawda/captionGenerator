@@ -9,18 +9,18 @@ async function searchedHash(req, res, next) {
 
     await captionRef.get().then(snapshot => {
             snapshot.forEach(doc => {
-                if (search == doc.data().hashtagOne.toLowerCase()) {
+                if (search == doc.data().hashtagOne.toLowerCase().replace(/\s/g, '')) {
                     errorFlag = true;
-                    captions.push(doc.data().caption);
-                } else if (search == doc.data().hashtagTwo.toLowerCase()) {
-                    captions.push(doc.data().caption);
-                } else if (search == doc.data().hashtagThree.toLowerCase()) {
-                    captions.push(doc.data().caption);
+                    captions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".");
+                } else if (search == doc.data().hashtagTwo.toLowerCase().replace(/\s/g, '')) {
+                    captions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".");
+                } else if (search == doc.data().hashtagThree.toLowerCase().replace(/\s/g, '')) {
+                    captions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".");
                 }
             });
         })
         .catch(err => {
-            userCaptions.push('Error getting documents', err);
+            captions.push('Error getting documents', err);
         });
 
     if (captions.length == 0) {

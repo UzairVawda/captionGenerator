@@ -5,10 +5,10 @@ function render(req, res, next) {
     if (user) {
         res.render('caption', {
             title: 'CC: Home',
+            error: false,
             loginFlag: true
         });
     } else {
-        req.session.message = 'Please login first!';
         res.redirect('signin');
     };
 }
@@ -16,16 +16,24 @@ function render(req, res, next) {
 function addCaption(req, res, next) {
     const caption = {
         caption: req.body.caption,
-        hashtagOne: req.body.hashtagOne,
-        hashtagTwo: req.body.hashtagTwo,
-        hashtagThree: req.body.hashtagThree,
+        hashtagOne: req.body.hashtagOne.replace(/\s/g, ''),
+        hashtagTwo: req.body.hashtagTwo.replace(/\s/g, ''),
+        hashtagThree: req.body.hashtagThree.replace(/\s/g, ''),
         username: firebase.auth().currentUser.email
     };
     const addCaption = firebase.firestore().collection('captions').add(caption);
     return addCaption.then(function() {
         res.render('caption', {
             title: 'CC: Caption',
-            message: 'Successfull added your caption!',
+            error: false,
+            message: 'Successfully added caption!',
+            loginFlag: true
+        });
+    }).catch(err => {
+        return res.render('caption', {
+            title: 'CC: Caption',
+            error: 'An error occured when saving your caption!' + err,
+            message: false,
             loginFlag: true
         });
     });

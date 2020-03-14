@@ -4,9 +4,13 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                 
-                    <p>Searching for {{search}}</p>
+                    <h1 class="text-justify text-center">Searching for {{search}}</h1>
+
+                    <hr class="my-4"> 
                     {{#each captions as |caption|}}
                         <p>{{caption}}</p>
+
+                        <hr class="my-4"> 
                     {{/each}}
                 </div>
             </div>

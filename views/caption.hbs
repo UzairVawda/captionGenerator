@@ -5,11 +5,15 @@
                 <div class="card-body">
                     <h2 class="card-title text-center">Add Caption</h2>
                     {{#if error}}
-                        <p id="error">{{error}}</p>
+                        <div class="alert alert-danger" role="alert">
+                            <p id="messageDiv">{{error}}</p>
+                        </div>
                     {{/if}}
-                    <div class="alert alert-danger" role="alert">
-                        <p id="messageDiv"></p>
-                    </div>
+                    {{#if message}}
+                        <div class="alert alert-success" role="alert">
+                            <p id="messageDiv">{{message}}</p>
+                        </div>
+                    {{/if}}
                     <form action="/caption" method="post">
                         <div class="form-group">
                             <textarea type="caption" name="caption" class="form-control" placeholder="Add Caption" required autofocus></textarea>

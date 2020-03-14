@@ -1,6 +1,8 @@
-const functions = require('../public/javascript/functions');
-const firebase = require('firebase/app');
-const vision = require('@google-cloud/vision');
+const firebase = require("firebase/app");
+
+const functions = require("../public/javascript/functions");
+
+const vision = require("@google-cloud/vision");
 const client = new vision.ImageAnnotatorClient({
     keyFilename: 'CaptionGenerator.json'
 });
@@ -22,24 +24,24 @@ async function checkImage(req, res, next) {
     var unique = [];
     const imageHashtags = [];
     const userCaptions = [];
-    const userImage = req.body.userImage;
+    const userImage = req.body.imageRef;
+    const imageLink = req.body.imageLink;
     const captionRef = firebase.firestore().collection('captions');
 
     //vision lable detection
-    const [result] = await client.labelDetection(userImage);
+    const [result] = await client.labelDetection(`gs://captiongenerator-268515.appspot.com/${userImage}`);
     const hashtag = result.labelAnnotations;
     hashtag.forEach(label => imageHashtags.push(label.description));
-
     //get all captions then compare 
     await captionRef.get().then(snapshot => {
             snapshot.forEach(doc => {
                 for (var i = 0; i < imageHashtags.length; i++) {
                     if (imageHashtags[i] == doc.data().hashtagOne) {
-                        userCaptions.push(doc.data().caption)
+                        userCaptions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".")
                     } else if (imageHashtags[i] == doc.data().hashtagTwo) {
-                        userCaptions.push(doc.data().caption)
+                        userCaptions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".")
                     } else if (imageHashtags[i] == doc.data().hashtagThree) {
-                        userCaptions.push(doc.data().caption)
+                        userCaptions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".")
                     }
                 }
             });
@@ -54,17 +56,16 @@ async function checkImage(req, res, next) {
             title: 'CC: Upload Image',
             hashtags: imageHashtags,
             captions: userCaptions,
-            image: userImage,
+            image: imageLink,
             loginFlag: true
         });
-
     } else {
         unique = functions.cleanArray(userCaptions)
         res.render('imageCaption', {
             title: 'CC: Upload Image',
             hashtags: imageHashtags,
             captions: unique,
-            image: userImage,
+            image: imageLink,
             loginFlag: true
         });
     }
