@@ -1,7 +1,5 @@
 const firebase = require("firebase/app");
-
 const functions = require("../public/javascript/functions");
-
 const vision = require("@google-cloud/vision");
 const client = new vision.ImageAnnotatorClient({
     keyFilename: 'CaptionGenerator.json'

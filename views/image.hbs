@@ -24,6 +24,7 @@
                     <div class="progress">
                         <div class="progress-bar" id="progresssBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+                    <p id="done"></p>
                     <br>
                     <p style="font-size: x-small;">*No need to refresh. Will redirect once loaded</p>
 
@@ -58,20 +59,27 @@
                             
                             task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                                 imageLink = downloadURL
-                            }).then(e => { 
-                                $.post("/image", { 
-                                    imageRef: 'images/' + file.name,
-                                    imageLink: imageLink
-                                }, function(data, status){ 
-                                    document.documentElement.innerHTML = data;
-                                });
-                            });
+                            })
+                            setTimeout(alertFunc, 5000);
+
+                            function alertFunc() {
+                                $('#done').innerHTML="Done"
+                            }
 
                             task.on('state_changed', function(snapshot){ 
                                 var progress =  (snapshot.bytesTransferred / snapshot.totalBytes) * 100; 
                                 $('#progresssBar').attr('aria-valuenow', progress).css('width', progress);
                             }, function(error) {
                                 console.log(error); 
+                            })
+
+                           task.then(e => { 
+                                $.post("/image", { 
+                                    imageRef: 'images/' + file.name,
+                                    imageLink: imageLink
+                                }, function(data, status){ 
+                                    document.documentElement.innerHTML = data;
+                                });
                             })
                         });
                         
