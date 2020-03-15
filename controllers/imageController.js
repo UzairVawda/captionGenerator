@@ -47,6 +47,7 @@ async function checkImage(req, res, next) {
         .catch(err => {
             userCaptions.push('Error getting documents', err);
         });
+
     if (userCaptions.length == 0) {
         userCaptions.push('Failed to find a caption for this image! Try uploading a caption!');
         res.render('imageCaption', {
