@@ -34,11 +34,11 @@ async function checkImage(req, res, next) {
     await captionRef.get().then(snapshot => {
             snapshot.forEach(doc => {
                 for (var i = 0; i < imageHashtags.length; i++) {
-                    if (imageHashtags[i] == doc.data().hashtagOne) {
+                    if (imageHashtags[i].toLowerCase().replace(/\s/g, '') == doc.data().hashtagOne.toLowerCase().replace(/\s/g, '')) {
                         userCaptions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".")
-                    } else if (imageHashtags[i] == doc.data().hashtagTwo) {
+                    } else if (imageHashtags[i].toLowerCase().replace(/\s/g, '') == doc.data().hashtagTwo.toLowerCase().replace(/\s/g, '')) {
                         userCaptions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".")
-                    } else if (imageHashtags[i] == doc.data().hashtagThree) {
+                    } else if (imageHashtags[i].toLowerCase().replace(/\s/g, '') == doc.data().hashtagThree.toLowerCase().replace(/\s/g, '')) {
                         userCaptions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".")
                     }
                 }
@@ -47,7 +47,6 @@ async function checkImage(req, res, next) {
         .catch(err => {
             userCaptions.push('Error getting documents', err);
         });
-
     if (userCaptions.length == 0) {
         userCaptions.push('Failed to find a caption for this image! Try uploading a caption!');
         res.render('imageCaption', {

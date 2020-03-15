@@ -22,6 +22,7 @@ function addCaption(req, res, next) {
         username: firebase.auth().currentUser.email
     };
     const addCaption = firebase.firestore().collection('captions').add(caption);
+
     return addCaption.then(function() {
         res.render('caption', {
             title: 'CC: Caption',

@@ -1,5 +1,4 @@
 const firebase = require('firebase/app');
-const functions = require('../public/javascript/functions');
 
 async function searchedHash(req, res, next) {
     const captions = [];
@@ -9,12 +8,11 @@ async function searchedHash(req, res, next) {
 
     await captionRef.get().then(snapshot => {
             snapshot.forEach(doc => {
-                if (search == doc.data().hashtagOne.toLowerCase().replace(/\s/g, '')) {
-                    errorFlag = true;
+                if (search.toLowerCase().replace(/\s/g, '') == doc.data().hashtagOne.toLowerCase().replace(/\s/g, '')) {
                     captions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".");
-                } else if (search == doc.data().hashtagTwo.toLowerCase().replace(/\s/g, '')) {
+                } else if (search.toLowerCase().replace(/\s/g, '') == doc.data().hashtagTwo.toLowerCase().replace(/\s/g, '')) {
                     captions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".");
-                } else if (search == doc.data().hashtagThree.toLowerCase().replace(/\s/g, '')) {
+                } else if (search.toLowerCase().replace(/\s/g, '') == doc.data().hashtagThree.toLowerCase().replace(/\s/g, '')) {
                     captions.push("'" + doc.data().caption + "'. Submitted by " + doc.data().username + ".");
                 }
             });

@@ -56,24 +56,17 @@
                             var storageRef = firebase.storage().ref('images/' + file.name)
                             var task = storageRef.put(file);
                             var imageLink = null
-                            
-                            task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                                imageLink = downloadURL
-                            })
-                            setTimeout(alertFunc, 5000);
-
-                            function alertFunc() {
-                                $('#done').innerHTML="Done"
-                            }
 
                             task.on('state_changed', function(snapshot){ 
                                 var progress =  (snapshot.bytesTransferred / snapshot.totalBytes) * 100; 
                                 $('#progresssBar').attr('aria-valuenow', progress).css('width', progress);
-                            }, function(error) {
-                                console.log(error); 
                             })
-
-                           task.then(e => { 
+                            
+                            task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                                imageLink = downloadURL
+                            })
+                            
+                            task.then(e => { 
                                 $.post("/image", { 
                                     imageRef: 'images/' + file.name,
                                     imageLink: imageLink
