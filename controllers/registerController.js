@@ -1,5 +1,4 @@
 const firebase = require("firebase/app");
-const session = require("express-session");
 
 function render(req, res, next) {
     const user = firebase.auth().currentUser;

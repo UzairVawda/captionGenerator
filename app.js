@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var firebase = require("firebase/app");
-var session = require('express-session')
 
 var indexRouter = require('./routes/index');
 var registerRouter = require('./routes/register');
@@ -46,8 +45,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//using sessions to manage error
-app.use(session({ secret: 'max', saveUninitialized: 'false', resave: 'false' }));
 
 app.use('/', indexRouter);
 app.use('/register', registerRouter);
